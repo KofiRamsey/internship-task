@@ -190,24 +190,24 @@
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ month: selectedMonth }),
+            body: JSON.stringify({month: selectedMonth}),
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.income !== null && data.expense !== null) {
-                document.getElementById('selectedMonthData').innerHTML = `
+                .then(response => response.json())
+                .then(data => {
+                    if (data.income !== null && data.expense !== null) {
+                        document.getElementById('selectedMonthData').innerHTML = `
                     <h3>Selected Month: ${selectedMonth}</h3>
                     <p>Income: ${data.income}</p>
                     <p>Expense: ${data.expense}</p>
                 `;
-            } else {
-                document.getElementById('selectedMonthData').innerHTML = '<p>Data not available for the selected month.</p>';
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            document.getElementById('selectedMonthData').innerHTML = '<p>Error fetching data.</p>';
-        });
+                    } else {
+                        document.getElementById('selectedMonthData').innerHTML = '<p>Data not available for the selected month.</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('selectedMonthData').innerHTML = '<p>Error fetching data.</p>';
+                });
     }
 </script>
 </body>
