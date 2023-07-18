@@ -24,7 +24,6 @@ def get_data_for_month(df, month):
 
 
 def generate_temporal_graph(df):
-    # Create numerical month representations
     month_num = range(1, len(df) + 1)
 
     # Plot the data as a double bar graph
@@ -61,15 +60,15 @@ def generate_temporal_graph(df):
     graph_data = base64.b64encode(buffer.getvalue()).decode()
     plt.close()
 
-    # Calculate highest income and expense months
+    # highest income and expense months
     highest_income_month = df.loc[df['Income'].idxmax(), 'Month']
     highest_expense_month = df.loc[df['Expense'].idxmax(), 'Month']
 
-    # Calculate lowest income and expense months
+    # lowest income and expense months
     lowest_income_month = df.loc[df['Income'].idxmin(), 'Month']
     lowest_expense_month = df.loc[df['Expense'].idxmin(), 'Month']
 
-    # Calculate average income and expense for the whole dataset
+    # average income and expense for the whole dataset
     average_income = df['Income'].mean()
     average_expense = df['Expense'].mean()
 
@@ -96,14 +95,12 @@ def upload_file():
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
             file.save(file_path)
 
-            # Process the Excel file
             df = pd.read_excel(file_path)
 
-            # Store the DataFrame in the global variable
             app.config['uploaded_df'] = df
 
-            # Generate temporal graph and other data
-            graph_data, highest_income_month, highest_expense_month, lowest_income_month, lowest_expense_month, average_income, average_expense, months_data = generate_temporal_graph(df)
+            graph_data, highest_income_month, highest_expense_month, lowest_income_month, lowest_expense_month, average_income, average_expense, months_data = generate_temporal_graph(
+                df)
 
             return render_template('graph.html',
                                    graph_data=graph_data,
@@ -122,12 +119,10 @@ def get_data():
         data = request.get_json()
         selected_month = data.get('month')
 
-        # Get the uploaded DataFrame from the global variable
         df = app.config['uploaded_df']
 
         income, expense = get_data_for_month(df, selected_month)
 
-        # Convert income and expense to standard Python data types
         income = int(income) if isinstance(income, (int64, int)) else float(income)
         expense = int(expense) if isinstance(expense, (int64, int)) else float(expense)
 
