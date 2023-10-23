@@ -1,4 +1,4 @@
-# internship-task
+# internship-task - Msebetsi Solutions
 
 # Financial Data Visualization
 
